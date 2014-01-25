@@ -558,7 +558,7 @@ static int aat3635_set_charger_ctrl(u32 ctl)
 	#endif
 	switch (ctl) {
 	case POWER_SUPPLY_DISABLE_CHARGE:
-		//pr_aat3635_info("Switch charger OFF\n");
+		pr_aat3635_info("Switch charger OFF\n");
 		reg_dis[0]=0x00;
 		//aat3635_i2c_tx_data(&reg_dis,1);
 		aat3635_LED_ctrl(0);
@@ -573,6 +573,7 @@ static int aat3635_set_charger_ctrl(u32 ctl)
 		aat3635_i2c_tx_data(reg_dis,2);
 		break;
 	case POWER_SUPPLY_ENABLE_SLOW_CHARGE:
+	case POWER_SUPPLY_ENABLE_FAST_CHARGE:
 		reg_slow[0]=0x01;
 		reg_slow[1]=0x93;
 		aat3635_i2c_tx_data(reg_slow,2);
@@ -662,10 +663,10 @@ static int aat3635_set_charger_ctrl(u32 ctl)
 		//aat3635_i2c_write_byte(0x03, 0x03);
 		//aat3635_i2c_write_byte(0x00, 0x04);
 		//aat3635_i2c_write_byte(0x0A, 0x00);
-		pr_aat3635_info("Switch charger ON (SLOW):");
 		#endif
+		pr_aat3635_info("Switch charger ON (SLOW):");
 		break;
-	case POWER_SUPPLY_ENABLE_FAST_CHARGE:
+/*	case POWER_SUPPLY_ENABLE_FAST_CHARGE:
 		reg_fast[0]=0x01;
 		reg_fast[1]=0xBB;
 		aat3635_i2c_tx_data(reg_fast,2);
@@ -746,6 +747,7 @@ static int aat3635_set_charger_ctrl(u32 ctl)
 		pr_aat3635_info("Switch charger ON (FAST):");
 		#endif
 		break;	
+*/
 	default:
 		pr_aat3635_info("%s: Not supported battery ctr called.!\n", __func__);
 		result = -EINVAL;
